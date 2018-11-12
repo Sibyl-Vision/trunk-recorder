@@ -280,8 +280,7 @@ void p25_recorder::switch_tdma(bool phase2) {
   omega = double(system_channel_rate) / double(symbol_rate);
   fmax  = symbol_rate/2; // Hz
   fmax = 2 * pi * fmax / double(system_channel_rate);
-  costas_clock->update_omega(omega);
-  costas_clock->update_fmax(fmax);
+  costas_clock->set_omega(omega);
   op25_frame_assembler->set_phase2_tdma(d_phase2_tdma);
 }
 
