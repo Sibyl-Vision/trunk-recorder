@@ -66,7 +66,6 @@
 
 #include <osmosdr/source.h>
 
-#include <gnuradio/uhd/usrp_source.h>
 #include <gnuradio/msg_queue.h>
 #include <gnuradio/message.h>
 #include <gnuradio/blocks/file_sink.h>
