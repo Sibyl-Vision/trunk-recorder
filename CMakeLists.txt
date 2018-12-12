@@ -105,8 +105,8 @@ endif()
 #find_package(LibbladeRF)
 find_package(GnuradioUHD)
 find_package(GrOsmoSDR)
-find_package(LibHackRF)
-find_package(UHD)
+#find_package(LibHackRF)
+#find_package(UHD)
 find_package(OpenSSL REQUIRED)
 
 if(NOT GNURADIO_RUNTIME_FOUND)
@@ -172,8 +172,6 @@ link_directories(
     ${Boost_LIBRARY_DIRS}
     ${GNURADIO_RUNTIME_LIBRARY_DIRS}
     ${GROSMOSDR_LIBRARIES_DIRS}
-    ${GNURADIO_UHD_LIBRARIES_DIRS}
-    ${UHD_LIBRARIES_DIRS}
     ${OPENSSL_ROOT_DIR}/lib
 )
 
@@ -244,4 +242,4 @@ target_compile_options(
 
 add_executable(recorder ${trunk_recorder_sources})
 
-target_link_libraries(recorder ssl crypto ${GNURADIO_PMT_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES} ${GNURADIO_FILTER_LIBRARIES} ${GNURADIO_DIGITAL_LIBRARIES} ${GNURADIO_ANALOG_LIBRARIES} ${GNURADIO_AUDIO_LIBRARIES} ${GNURADIO_UHD_LIBRARIES} ${UHD_LIBRARIES} ${GNURADIO_BLOCKS_LIBRARIES} ${GROSMOSDR_LIBRARIES} ${Boost_LIBRARIES} ${LIBOP25_REPEATER_LIBRARIES} gnuradio-op25_repeater imbe_vocoder)
+target_link_libraries(recorder ssl crypto ${GNURADIO_PMT_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES} ${GNURADIO_FILTER_LIBRARIES} ${GNURADIO_DIGITAL_LIBRARIES} ${GNURADIO_ANALOG_LIBRARIES} ${GNURADIO_AUDIO_LIBRARIES} ${GNURADIO_BLOCKS_LIBRARIES} ${GROSMOSDR_LIBRARIES} ${Boost_LIBRARIES} ${LIBOP25_REPEATER_LIBRARIES} gnuradio-op25_repeater imbe_vocoder)
