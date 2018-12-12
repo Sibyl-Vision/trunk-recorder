@@ -14,11 +14,6 @@ void Source::set_antenna(std::string ant)
     cast_to_osmo_sptr(source_block)->set_antenna(antenna, 0);
     BOOST_LOG_TRIVIAL(info) << "Setting antenna to [" << cast_to_osmo_sptr(source_block)->get_antenna() << "]";
   }
-
-  if (driver == "usrp") {
-    BOOST_LOG_TRIVIAL(info) << "Setting antenna to [" << antenna << "]";
-    cast_to_usrp_sptr(source_block)->set_antenna(antenna, 0);
-  }
 }
 
 std::string Source::get_antenna() {
@@ -196,11 +191,6 @@ void Source::set_gain(int r)
     gain = r;
     cast_to_osmo_sptr(source_block)->set_gain(gain);
     BOOST_LOG_TRIVIAL(info) << "Gain set to: " << cast_to_osmo_sptr(source_block)->get_gain();
-  }
-
-  if (driver == "usrp") {
-    gain = r;
-    cast_to_usrp_sptr(source_block)->set_gain(gain);
   }
 }
 
