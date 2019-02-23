@@ -25,6 +25,13 @@ void System::set_upload_script(std::string script) {
   this->upload_script = script;
 }
 
+double System::get_min_duration() {
+  return this->min_call_duration;
+}
+
+void System::set_min_duration(double duration) {
+  this->min_call_duration = duration;
+}
 
 
 System::System(int sys_num) {
@@ -98,11 +105,11 @@ unsigned long System::get_sys_id() {
 }
 
 unsigned long System::get_nac() {
-  return this->wacn;
+  return this->nac;
 }
 
 unsigned long System::get_wacn() {
-  return this->nac;
+  return this->wacn;
 }
 
 bool System::get_call_log() {

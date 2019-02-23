@@ -75,8 +75,10 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       BOOST_LOG_TRIVIAL(info) << "Audio Archive: " << system->get_audio_archive();
       system->set_talkgroups_file(node.second.get<std::string>("talkgroupsFile", ""));
       BOOST_LOG_TRIVIAL(info) << "Talkgroups File: " << system->get_talkgroups_file();
-      system->set_record_unknown(node.second.get<bool>("recordUnknown",true));
-      BOOST_LOG_TRIVIAL(info) << "Record Unkown Talkgroups: " << system->get_record_unknown();
+      system->set_record_unknown(node.second.get<bool>("recordUnknown", true));
+      BOOST_LOG_TRIVIAL(info) << "Record Unknown Talkgroups: " << system->get_record_unknown();
+      system->set_min_duration(node.second.get<double>("minDuration", 0));
+      BOOST_LOG_TRIVIAL(info) << "Minimum Call Duration (in seconds): " << system->get_min_duration();
       systems.push_back(system);
 
       system->set_bandplan(node.second.get<std::string>("bandplan", "800_standard"));
@@ -138,6 +140,8 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       int    bb_gain        = node.second.get<double>("bbGain", 0);
       int    mix_gain       = node.second.get<double>("mixGain", 0);
       int    lna_gain       = node.second.get<double>("lnaGain", 0);
+      int    pga_gain       = node.second.get<double>("pgaGain", 0);
+      int    tia_gain       = node.second.get<double>("tiaGain", 0);
       int    vga1_gain      = node.second.get<double>("vga1Gain", 0);
       int    vga2_gain      = node.second.get<double>("vga2Gain", 0);
       double fsk_gain       = node.second.get<double>("fskGain", 1.0);
@@ -147,6 +151,7 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       std::string antenna   = node.second.get<std::string>("antenna", "");
       int digital_recorders = node.second.get<int>("digitalRecorders", 0);
       int debug_recorders   = node.second.get<int>("debugRecorders", 0);
+      int sigmf_recorders   = node.second.get<int>("sigmfRecorders", 0);
       int analog_recorders  = node.second.get<int>("analogRecorders", 0);
 
       std::string driver = node.second.get<std::string>("driver", "");
@@ -165,6 +170,8 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       BOOST_LOG_TRIVIAL(info) << "IF Gain: " << node.second.get<double>("ifGain", 0);
       BOOST_LOG_TRIVIAL(info) << "BB Gain: " << node.second.get<double>("bbGain", 0);
       BOOST_LOG_TRIVIAL(info) << "LNA Gain: " << node.second.get<double>("lnaGain", 0);
+      BOOST_LOG_TRIVIAL(info) << "PGA Gain: " << node.second.get<double>("pgaGain", 0);
+      BOOST_LOG_TRIVIAL(info) << "TIA Gain: " << node.second.get<double>("tiaGain", 0);
       BOOST_LOG_TRIVIAL(info) << "MIX Gain: " << node.second.get<double>("mixGain", 0);
       BOOST_LOG_TRIVIAL(info) << "VGA1 Gain: " << node.second.get<double>("vga1Gain", 0);
       BOOST_LOG_TRIVIAL(info) << "VGA2 Gain: " << node.second.get<double>("vga2Gain", 0);
@@ -172,6 +179,7 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       BOOST_LOG_TRIVIAL(info) << "Idle Silence: " << node.second.get<bool>("idleSilence", 0);
       BOOST_LOG_TRIVIAL(info) << "Digital Recorders: " << node.second.get<int>("digitalRecorders", 0);
       BOOST_LOG_TRIVIAL(info) << "Debug Recorders: " << node.second.get<int>("debugRecorders",  0);
+      BOOST_LOG_TRIVIAL(info) << "SigMF Recorders: " << node.second.get<int>("sigmfRecorders",  0);
       BOOST_LOG_TRIVIAL(info) << "Analog Recorders: " << node.second.get<int>("analogRecorders",  0);
       BOOST_LOG_TRIVIAL(info) << "Driver: " << node.second.get<std::string>("driver",  "");
 
@@ -216,9 +224,11 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
         source->set_mix_gain(mix_gain);
       }
 
-      if (lna_gain != 0) {
-        source->set_lna_gain(lna_gain);
-      }
+      source->set_lna_gain(lna_gain);
+
+      source->set_tia_gain(tia_gain);
+
+      source->set_pga_gain(pga_gain);
 
       if (vga1_gain != 0) {
         source->set_vga1_gain(vga1_gain);
@@ -243,6 +253,7 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       source->create_digital_recorders(tb, digital_recorders);
       source->create_analog_recorders(tb, analog_recorders);
       source->create_debug_recorders(tb, debug_recorders);
+      source->create_sigmf_recorders(tb, sigmf_recorders);
       sources.push_back(source);
     }
   }
