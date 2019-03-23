@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "recorders/recorder.h"
 #include "source.h"
+#include "uploaders/mqtt.h"
 
 //static int rec_counter=0;
 
@@ -180,6 +181,9 @@ void Call::end_call() {
         signal(SIGCHLD, SIG_IGN);
         //int rc = system(shell_command.str().c_str());
         system(shell_command.str().c_str());
+      }
+
+      if (this->config.mqtt_server != "") {
       }
     } else {
       // Call too short, delete it (we are deleting it after since we can't easily prevent the file from saving)

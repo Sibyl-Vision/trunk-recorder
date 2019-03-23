@@ -333,3 +333,46 @@ boost::property_tree::ptree System::get_stats_current(float timeDiff)
 
   return system_node;
 }
+
+std::string System::get_mqtt_host() {
+  return this->mqtt_host;
+}
+
+void System::set_mqtt_host(std::string host) {
+  mqtt_host = host;
+}
+
+std::string System::get_mqtt_topic() {
+  return this->mqtt_topic;
+}
+
+void System::set_mqtt_topic(std::string topic) {
+  mqtt_topic = topic;
+}
+
+std::string System::get_mqtt_id()
+{
+  return this->mqtt_id;
+}
+
+void System::set_mqtt_id(std::string id)
+{
+  mqtt_id = id;
+}
+
+int System::get_mqtt_port() {
+  return this->mqtt_port;
+}
+
+void System::set_mqtt_port(int port) {
+  mqtt_port = port;
+}
+
+void System::connect_mqtt() {
+  class mqtt_client *pMqtt_client;
+  int rc;
+
+  mosqpp::lib_init();
+
+  pMqtt_client = new mqtt_client(this->mqtt_id.c_str(), this->mqtt_host.c_str(), this->mqtt_port);
+}

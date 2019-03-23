@@ -19,6 +19,9 @@ struct Config {
         std::string instance_key;
         std::string instance_id;
         std::string capture_dir;
+        std::string mqtt_server;
+        std::string mqtt_topic;
+        int mqtt_qos;
         int call_timeout;
         bool log_file;
         int control_message_warn_rate;

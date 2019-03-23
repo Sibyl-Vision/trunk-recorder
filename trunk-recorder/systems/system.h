@@ -7,6 +7,7 @@
 #include "smartnet_trunking.h"
 #include "p25_trunking.h"
 #include "parser.h"
+#include "../uploaders/mqtt.h"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -30,16 +31,20 @@ typedef boost::shared_ptr<p25_recorder> p25_recorder_sptr;
 class p25conventional_recorder;
 typedef boost::shared_ptr<p25conventional_recorder> p25conventional_recorder_sptr;
 
-
-
 class System
 {
         int sys_num;
         unsigned long sys_id;
         unsigned long wacn;
         unsigned long nac;
-public:
-        enum TalkgroupDisplayFormat { talkGroupDisplayFormat_id=0, talkGroupDisplayFormat_id_tag=1, talkGroupDisplayFormat_tag_id=2};
+
+      public:
+        enum TalkgroupDisplayFormat
+        {
+                talkGroupDisplayFormat_id = 0,
+                talkGroupDisplayFormat_id_tag = 1,
+                talkGroupDisplayFormat_tag_id = 2
+        };
 
         Talkgroups *talkgroups;
         p25p2_lfsr *lfsr;
@@ -47,9 +52,13 @@ public:
         std::string talkgroups_file;
         std::string short_name;
         std::string api_key;
+        std::string mqtt_host;
+        std::string mqtt_id;
+        std::string mqtt_topic;
         std::string default_mode;
         std::string system_type;
         std::string upload_script;
+        int mqtt_port;
         int message_count;
         int retune_attempts;
         time_t last_message_time;
@@ -76,6 +85,18 @@ public:
         smartnet_trunking_sptr smartnet_trunking;
         p25_trunking_sptr p25_trunking;
 
+        mqtt_client *iot_client;
+        std::string get_mqtt_host();
+        void set_mqtt_host(std::string host);
+        std::string get_mqtt_topic();
+        void set_mqtt_topic(std::string topic);
+        int get_mqtt_port();
+        void set_mqtt_port(int port);
+        std::string get_mqtt_id();
+        void set_mqtt_id(std::string id);
+        void set_mqtt_client();
+        void connect_mqtt();
+
         std::string get_short_name();
         void set_short_name(std::string short_name);
         std::string get_upload_script();
@@ -94,8 +115,8 @@ public:
         unsigned long get_sys_id();
         unsigned long get_wacn();
         unsigned long get_nac();
-        void set_xor_mask(unsigned long sys_id,  unsigned long wacn,  unsigned long nac);
-        const char * get_xor_mask();
+        void set_xor_mask(unsigned long sys_id, unsigned long wacn, unsigned long nac);
+        const char *get_xor_mask();
         bool update_status(TrunkMessage message);
         int get_sys_num();
         void set_system_type(std::string);
@@ -116,7 +137,7 @@ public:
         std::vector<p25conventional_recorder_sptr> get_conventionalP25_recorders();
         std::vector<double> get_channels();
         std::vector<double> get_control_channels();
-        System(int sys_id );
+        System(int sys_id);
         void set_bandplan(std::string);
         std::string get_bandplan();
         void set_bandfreq(int);
@@ -144,7 +165,7 @@ public:
         boost::property_tree::ptree get_stats();
         boost::property_tree::ptree get_stats_current(float timeDiff);
 
-private:
+      private:
         TalkgroupDisplayFormat talkgroup_display_format;
         bool d_delaycreateoutput;
         bool d_hideEncrypted;

@@ -67,6 +67,20 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
       system->set_api_key(node.second.get<std::string>("apiKey", ""));
       BOOST_LOG_TRIVIAL(info) << "API Key: " << system->get_api_key();
 
+        BOOST_LOG_TRIVIAL(info) << "Capture Directory: " << config.capture_dir;
+        config.upload_server = pt.get<std::string>("uploadServer", "encode-upload.sh");
+        BOOST_LOG_TRIVIAL(info) << "Upload Server: " << config.upload_server;
+        config.mqtt_server = pt.get<std::string>("mqttServer", "");
+        BOOST_LOG_TRIVIAL(info) << "MQTT Server: " << config.mqtt_server;
+        std::string default_mode = pt.get<std::string>("defaultMode", "digital");
+        BOOST_LOG_TRIVIAL(info) << "Default Mode: " << default_mode;
+        config.call_timeout = pt.get<int>("callTimeout", 3);
+        BOOST_LOG_TRIVIAL(info) << "Call Timeout (seconds): " << config.call_timeout;
+        config.log_file = pt.get<bool>("logFile", false);
+        BOOST_LOG_TRIVIAL(info) << "Log to File: " << config.log_file;
+        config.control_message_warn_rate = pt.get<int>("controlWarnRate", 10);
+        BOOST_LOG_TRIVIAL(info) << "Control channel rate warning: " << config.control_message_warn_rate;
+
       system->set_upload_script(node.second.get<std::string>("uploadScript", ""));
       BOOST_LOG_TRIVIAL(info) << "Upload Script: " << config.upload_script;
       system->set_call_log(node.second.get<bool>("callLog", true));
@@ -113,18 +127,6 @@ Config load_config(std::string config_file, std::vector<Source *> &sources, std:
     {
       config.capture_dir.erase(config.capture_dir.length() - 1);
     }
-    BOOST_LOG_TRIVIAL(info) << "Capture Directory: " << config.capture_dir;
-    config.upload_server = pt.get<std::string>("uploadServer", "encode-upload.sh");
-    BOOST_LOG_TRIVIAL(info) << "Upload Server: " << config.upload_server;
-    default_mode = pt.get<std::string>("defaultMode", "digital");
-    BOOST_LOG_TRIVIAL(info) << "Default Mode: " << default_mode;
-    config.call_timeout = pt.get<int>("callTimeout", 3);
-    BOOST_LOG_TRIVIAL(info) << "Call Timeout (seconds): " << config.call_timeout;
-    config.log_file = pt.get<bool>("logFile", false);
-    BOOST_LOG_TRIVIAL(info) << "Log to File: " << config.log_file;
-    config.control_message_warn_rate = pt.get<int>("controlWarnRate", 10);
-    BOOST_LOG_TRIVIAL(info) << "Control channel rate warning: " << config.control_message_warn_rate;
-
 
     BOOST_FOREACH(boost::property_tree::ptree::value_type  & node,
                   pt.get_child("sources"))
