@@ -166,6 +166,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/lib/op25_repeater/lib
     ${CMAKE_SOURCE_DIR}/lib/op25_repeater/include
     ${CMAKE_SOURCE_DIR}/lib/mosquitto
+    ${CMAKE_SOURCE_DIR}/lib/mosquitto/lib/cpp
     ${OPENSSL_INCLUDE_DIR}
     "lib"
 )
@@ -202,7 +203,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -Wno-narrowing")
 
 
 add_subdirectory(lib/op25_repeater)
-
+add_subdirectory(lib/mosquitto)
 
 list(APPEND trunk_recorder_sources
   trunk-recorder/main.cc
@@ -211,6 +212,7 @@ list(APPEND trunk_recorder_sources
   trunk-recorder/uploaders/uploader.cc
   trunk-recorder/uploaders/call_uploader.cc
   trunk-recorder/uploaders/stat_socket.cc
+  trunk-recorder/uploaders/mqtt.cc
   trunk-recorder/call_conventional.cc
   trunk-recorder/call.cc
   trunk-recorder/systems/smartnet_trunking.cc
