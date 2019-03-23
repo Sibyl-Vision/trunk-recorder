@@ -106,9 +106,7 @@ option(DOCUMENTATION "Build documentation?" ON)
 add_subdirectory(lib)
 add_subdirectory(client)
 add_subdirectory(src)
-if (DOCUMENTATION)
-	add_subdirectory(man)
-endif (DOCUMENTATION)
+
 
 # ========================================
 # Install config file
