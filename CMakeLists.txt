@@ -44,6 +44,7 @@ if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
 endif()
 if(APPLE)
     set(CMAKE_MACOSX_RPATH ON)
+    link_directories(/usr/local/opt/openssl/lib/)
 endif()
 
 ########################################################################
@@ -164,6 +165,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_SOURCE_DIR}/lib/op25_repeater/lib
     ${CMAKE_SOURCE_DIR}/lib/op25_repeater/include
+    ${CMAKE_SOURCE_DIR}/lib/mosquitto
     ${OPENSSL_INCLUDE_DIR}
     "lib"
 )
@@ -243,6 +245,6 @@ target_compile_options(
     "-w"
 )
 
-add_executable(recorder ${trunk_recorder_sources})
+add_executable(recorder ${trunk_recorder_sources} trunk-recorder/uploaders/mqtt.cc trunk-recorder/uploaders/mqtt.h)
 
 target_link_libraries(recorder ssl crypto ${GNURADIO_PMT_LIBRARIES} ${GNURADIO_RUNTIME_LIBRARIES} ${GNURADIO_FILTER_LIBRARIES} ${GNURADIO_DIGITAL_LIBRARIES} ${GNURADIO_ANALOG_LIBRARIES} ${GNURADIO_AUDIO_LIBRARIES} ${GNURADIO_UHD_LIBRARIES} ${UHD_LIBRARIES} ${GNURADIO_BLOCKS_LIBRARIES} ${GROSMOSDR_LIBRARIES} ${Boost_LIBRARIES} ${LIBOP25_REPEATER_LIBRARIES} gnuradio-op25_repeater imbe_vocoder)
