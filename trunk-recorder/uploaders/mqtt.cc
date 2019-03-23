@@ -75,3 +75,15 @@ void mqtt_client::on_message(const struct mosquitto_message *message)
         }
     }
 }
+
+void mqtt_client::send_mqtt_call(Call *call, System *sys, Config config) {
+    std::string msg = "pk";
+
+    char buf[strlen(msg.c_str())];
+    memset(buf, 0, 51*sizeof(char));
+    /* Copy N-1 bytes to ensure always 0 terminated. */
+    memcpy(buf, &msg, 50*sizeof(char));
+
+    const char *topic = const_cast<char *>(("skyscraper/edge/trunkrecorder/" + sys->get_short_name() + "/" + call->get_talkgroup_tag()).c_str());
+    publish(NULL, topic, strlen(buf), (u_int8_t *) buf);
+}

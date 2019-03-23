@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cstdio>
 
+#include "config.h"
+
 #define MAX_PAYLOAD 50
 #define DEFAULT_KEEP_ALIVE 60
 
@@ -17,6 +19,7 @@ public:
     void on_connect(int rc) override;
     void on_message(const struct mosquitto_message *message) override;
     void on_subscribe(int mid, int qos_count, const int *granted_qos) override;
+    void send_mqtt_call(Call *call, System *sys, Config config);
 };
 
 #endif //MQTT_H

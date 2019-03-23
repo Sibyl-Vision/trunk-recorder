@@ -23,6 +23,9 @@
 
 #include <boost/property_tree/ptree.hpp>
 
+#include "../uploaders/mqtt.h"
+
+
 class Source;
 class analog_recorder;
 typedef boost::shared_ptr<analog_recorder> analog_recorder_sptr;

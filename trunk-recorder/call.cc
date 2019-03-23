@@ -184,6 +184,7 @@ void Call::end_call() {
       }
 
       if (this->config.mqtt_server != "") {
+          sys->iot_client->send_mqtt_call(this, sys, config);
       }
     } else {
       // Call too short, delete it (we are deleting it after since we can't easily prevent the file from saving)
