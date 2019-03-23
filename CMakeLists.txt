@@ -167,6 +167,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/lib/op25_repeater/include
     ${CMAKE_SOURCE_DIR}/lib/mosquitto
     ${CMAKE_SOURCE_DIR}/lib/mosquitto/lib/cpp
+    ${CMAKE_SOURCE_DIR}/lib/mosquitto/lib
     ${OPENSSL_INCLUDE_DIR}
     "lib"
 )
@@ -178,6 +179,7 @@ link_directories(
     ${GNURADIO_UHD_LIBRARIES_DIRS}
     ${UHD_LIBRARIES_DIRS}
     ${OPENSSL_ROOT_DIR}/lib
+
 )
 
 #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
