@@ -7,7 +7,7 @@
 #include "smartnet_trunking.h"
 #include "p25_trunking.h"
 #include "parser.h"
-#include "../uploaders/mqtt.h"
+//#include "../uploaders/mqtt.h"
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

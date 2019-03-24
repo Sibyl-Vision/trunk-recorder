@@ -5,7 +5,14 @@
 #include <cstring>
 #include <cstdio>
 
-#include "config.h"
+#include "../config.h"
+//#include "../systems/system.h"
+
+class mqtt_client;
+class Call;
+class System;
+
+#include "../call.h"
 
 #define MAX_PAYLOAD 50
 #define DEFAULT_KEEP_ALIVE 60
