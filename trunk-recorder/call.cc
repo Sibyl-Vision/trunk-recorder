@@ -183,7 +183,7 @@ void Call::end_call() {
         system(shell_command.str().c_str());
       }
 
-      if (this->config.mqtt_server != "") {
+      if (sys->get_mqtt_host() != "") {
           sys->iot_client->send_mqtt_call(this, sys, config);
       }
     } else {

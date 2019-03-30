@@ -232,17 +232,17 @@ void load_config(string config_file)
       BOOST_LOG_TRIVIAL(info) << "API Key: " << system->get_api_key();
 
       system->set_mqtt_host(node.second.get<std::string>("mqttServer", ""));
-      BOOST_LOG_TRIVIAL(info) << "MQTT Server: " << config.mqtt_server;
+      BOOST_LOG_TRIVIAL(info) << "MQTT Server: " << system->get_mqtt_host();
       system->set_mqtt_port(node.second.get<int>("mqttPort", 1400));
-      BOOST_LOG_TRIVIAL(info) << "MQTT Port: " << config.mqtt_server;
+      BOOST_LOG_TRIVIAL(info) << "MQTT Port: " << system->get_mqtt_port();
       system->set_mqtt_topic(node.second.get<std::string>("mqttTopic", ""));
-      BOOST_LOG_TRIVIAL(info) << "MQTT Topic: " << config.mqtt_topic;
+      BOOST_LOG_TRIVIAL(info) << "MQTT Topic: " << system->get_mqtt_host();
       if (system->get_mqtt_host() != "") {
         system->connect_mqtt();
       }
 
       system->set_upload_script(node.second.get<std::string>("uploadScript", ""));
-      BOOST_LOG_TRIVIAL(info) << "Upload Script: " << config.upload_script;
+      BOOST_LOG_TRIVIAL(info) << "Upload Script: " << system->get_upload_script();
       system->set_call_log(node.second.get<bool>("callLog", true));
       BOOST_LOG_TRIVIAL(info) << "Call Log: " << system->get_call_log();
       system->set_audio_archive(node.second.get<bool>("audioArchive", true));
