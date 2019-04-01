@@ -1279,7 +1279,7 @@ int main(int argc, char **argv)
     BOOST_LOG_TRIVIAL(info) << "Using Config file: " << config_file << "\n";
   }
 
-
+mosqpp::lib_init(); 
   tb = gr::make_top_block("Trunking");
   tb->start();
   tb->lock();

@@ -1,4 +1,5 @@
-/*.json
+*.json
+*.wav
 /*.csv
 sys_*/
 junk/

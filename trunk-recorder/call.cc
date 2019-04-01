@@ -184,6 +184,7 @@ void Call::end_call() {
       }
 
       if (sys->get_mqtt_host() != "") {
+          BOOST_LOG_TRIVIAL(error) << "Sendinging MQTT Call ";
           sys->iot_client->send_mqtt_call(this, sys, config);
       }
     } else {

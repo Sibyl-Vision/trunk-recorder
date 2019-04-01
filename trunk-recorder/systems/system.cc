@@ -370,7 +370,6 @@ void System::set_mqtt_port(int port) {
 
 void System::connect_mqtt() {
   mosqpp::lib_init();
-
   iot_client = new mqtt_client(this->short_name.c_str(), this->mqtt_host.c_str(), this->mqtt_port);
 }
 
